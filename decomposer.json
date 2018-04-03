@@ -1,0 +1,21 @@
+{
+	"Lunr": {
+        "url": "m2:/mmw/lunr.git",
+        "version": "0.4",
+        "revision": "master",
+        "psr4": {
+            "prefix": "Lunr",
+            "search-path": "/src/Lunr/"
+        }
+    },
+
+    "Pimple": {
+        "url": "https://github.com/silexphp/Pimple.git",
+        "version": "3.2.3",
+        "revision": "master",
+        "psr4": {
+          "prefix": "Pimple",
+          "search-path": "/src/Pimple/"
+        }
+    }
+}
