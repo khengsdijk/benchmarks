@@ -22,21 +22,14 @@ set_include_path(
 $config = new Lunr\Core\Configuration();
 $locator = new Lunr\Core\ConfigServiceLocator($config);
 
-
-
-// not sure what to do with this as of yet
-$reflectionClass = new ReflectionClass('Lunr\Core\ConfigServiceLocator');
-$reflectionProperty = $reflectionClass->getProperty('cache');
-print_r($reflectionProperty);
-$reflectionProperty->setAccessible(true);
-$reflectionProperty->setValue($locator, null);
-
 $before = microtime(true);
 
 // test the loading of a singleton class
 for ($i=0 ; $i<1000 ; $i++)
 {
-    $cliparser = $locator->cliparser();
+    $cliparser = $locator->minimumsingleton();
+
+    echo get_class($cliparser);
     unset($cliparser);
 }
 
@@ -47,13 +40,6 @@ echoTime($after, $before, $i);
 unset($before);
 unset($after);
 
-// test the loading of a non singleton class using lunr locator
-$before = microtime(true);
-for ($i=0 ; $i<1000 ; $i++)
-{
-    $fao = $locator->fao();
-    unset($fao);
-}
 
 $after = microtime(true);
 

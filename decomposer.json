@@ -1,4 +1,13 @@
 {
+    "TestClasses": {
+      "url": "https://github.com/khengsdijk/testclasses.git",
+      "version": "0.1",
+      "revision": "master",
+      "psr4": {
+        "prefix": "TestClasses",
+        "search-path": "/src/TestClasses/"
+      }
+    },
 	"Lunr": {
         "url": "m2:/mmw/lunr.git",
         "version": "0.4",
@@ -8,7 +17,15 @@
             "search-path": "/src/Lunr/"
         }
     },
-
+    "Stellr": {
+      "url": "m2:/mmw/stellr.git",
+      "version": "1.6",
+      "revision": "master",
+      "psr4": {
+        "prefix": "Stellr",
+        "search-path": "/src/Stellr/"
+      }
+    },
     "Pimple": {
         "url": "https://github.com/silexphp/Pimple.git",
         "version": "3.2.3",
