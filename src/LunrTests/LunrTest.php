@@ -1,6 +1,6 @@
 <?php
 /**
- *
+ *this file contains the tests for Lunr locator
  *
  * PHP Version 7.0
  *
@@ -8,21 +8,7 @@
  * @author     Koen Hengsdijk
  * @copyright  2012-2018, M2Mobi BV, Amsterdam, The Netherlands
  */
-// use Lunr\Core\ConfigServiceLocator;
 
-
-$base = dirname(__DIR__, 2);
-// Include libraries
-require_once $base . '/decomposer.autoload.inc.php';
-
-// Define application config lookup path
-set_include_path(
-    get_include_path() . ':' .
-    $base . '/config' . ':' .
-    $base . '/src'
-);
-
-use Util;
 
 class LunrTest implements Basetest
 {
@@ -52,22 +38,32 @@ class LunrTest implements Basetest
        $this->config     = $config;
        $this->testRounds = $testRounds;
 
-       $this->util = new Util();
+   //    $this->util = new Util();
     }
 
-
+    /**
+     * Tests the loading of singletons repeatedly
+     *
+     * @return array the results of the test
+     */
     public function loadSingletonRepeatedly()
     {
+
+        $classes = LunrLocatorNames::getSingletons();
+
         $before = microtime(true);
 
-        for ($i = 0; $i < $this->testRounds; $i++){
-            $class = $this->locator->minimumsingleton();
-            unset($class);
+        foreach ($classes as $class) {
+            for ($j = 0; $j < $this->testRounds; $j++) {
+
+                $LocatedClass = $this->{$this->locator[$class]}();
+                unset($LocatedClass);
+            }
         }
 
         $after = microtime(true);
 
-       return $this->util->averageTime($before, $after, $this->testRounds ,"minimumSingleton");
+        return Util::averageTime($before, $after, $this->testRounds ,"minimumSingleton");
     }
 
     public function loadSingletonsIncrementally()
