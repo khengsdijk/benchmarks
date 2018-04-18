@@ -12,8 +12,16 @@
 
 namespace LunrTests;
 
-
-class LunrBaseTest
+interface LunrBaseTest
 {
+
+    public function loadSingletonsRepeatedly();
+
+    public function loadSingletonsIncrementally();
+
+    public function loadNonSingletonsRepeatedly();
+
+    public function loadNonSingletonsIncrementally();
+
 
 }

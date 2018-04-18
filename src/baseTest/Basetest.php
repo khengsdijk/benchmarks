@@ -9,16 +9,20 @@
  * @copyright  2012-2018, M2Mobi BV, Amsterdam, The Netherlands
  */
 
+namespace baseTest;
 
 interface Basetest
 {
 
+    public function loadSingletonsRepeatedly();
 
     public function loadSingletonsIncrementally();
 
-    public function loadNonSingletonRepeatedly();
+    public function loadNonSingletonsRepeatedly();
 
     public function loadNonSingletonsIncrementally();
+
+    public function loadAllClassesIncrementally();
 
 
 }

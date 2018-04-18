@@ -6,17 +6,45 @@
  * Time: 15:42
  */
 
-class PimpleTest extends BasePimpleTest
+namespace PimpleTests;
+use baseTest\Basetest;
+use TestClasses;
+
+class PimpleTest implements Basetest
 {
 
+    protected $container;
 
     /**
-     * PimpleTest constructor.
+     * BasePimpleTest constructor.
+     *
+     * @param $container
      */
     public function __construct($container)
     {
-        parent::__construct($container);
+        $this->container = $container;
     }
+
+    public function loadSingletonsRepeatedly()
+    {
+
+    }
+
+    public function loadSingletonsIncrementally()
+    {
+        // TODO: Implement loadSingletonsIncrementally() method.
+    }
+
+    public function loadNonSingletonsRepeatedly()
+    {
+        // TODO: Implement loadNonSingletonRepeatedly() method.
+    }
+
+    public function loadNonSingletonsIncrementally()
+    {
+        // TODO: Implement loadNonSingletonsIncrementally() method.
+    }
+
 
     public function executeTest()
     {

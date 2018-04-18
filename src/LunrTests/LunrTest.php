@@ -1,6 +1,6 @@
 <?php
 /**
- *this file contains the tests for Lunr locator
+ *this file contains the tests for LunrTests locator
  *
  * PHP Version 7.0
  *
@@ -9,9 +9,12 @@
  * @copyright  2012-2018, M2Mobi BV, Amsterdam, The Netherlands
  */
 
+namespace LunrTests;
+use baseTest\Basetest;
 
 class LunrTest implements Basetest
 {
+
     /**
      * @var int Number of times to repeatedly load the test class
      */
@@ -23,7 +26,7 @@ class LunrTest implements Basetest
     protected $config;
 
     /**
-     * @var instance of the Lunr locator
+     * @var instance of the LunrTests locator
      */
     protected $locator;
 
@@ -32,13 +35,12 @@ class LunrTest implements Basetest
      *  instance of the service locator.
      * @var \Lunr\Core\ConfigServiceLocator
      */
-    public function __construct($locator, $config, $testRounds)
+    public function __construct($locator, $config, $testRounds, $util)
     {
        $this->locator    = $locator;
        $this->config     = $config;
        $this->testRounds = $testRounds;
-
-   //    $this->util = new Util();
+       $this->util       = $util;
     }
 
     /**
@@ -46,40 +48,99 @@ class LunrTest implements Basetest
      *
      * @return array the results of the test
      */
-    public function loadSingletonRepeatedly()
+    public function loadSingletonsRepeatedly()
     {
+        $results = array();
 
         $classes = LunrLocatorNames::getSingletons();
 
-        $before = microtime(true);
-
         foreach ($classes as $class) {
-            for ($j = 0; $j < $this->testRounds; $j++) {
 
-                $LocatedClass = $this->{$this->locator[$class]}();
+            $LocatedClass = $this->locator->$class();
+            $className = get_class($LocatedClass);
+
+            $startTime = microtime(true);
+            for ($j = 0; $j < $this->testRounds; $j++) {
+                $LocatedClass = $this->locator->$class();
                 unset($LocatedClass);
             }
+
+            $endTime = microtime(true);
+            array_push($results, $this->util->averageTime($startTime, $endTime, $this->testRounds, $className));
         }
 
-        $after = microtime(true);
-
-        return Util::averageTime($before, $after, $this->testRounds ,"minimumSingleton");
+        return $results;
     }
 
     public function loadSingletonsIncrementally()
     {
-        // TODO: Implement loadSingletonsIncrementally() method.
+        $results = array();
+        $resultName = "Incremental loading of singletons";
+        $classes = LunrLocatorNames::getSingletons();
+
+        $startTime = microtime(true);
+        for ($j = 0; $j < $this->testRounds; $j++) {
+
+            foreach ($classes as $class) {
+                $LocatedClass = $this->locator->$class();
+                unset($LocatedClass);
+            }
+        }
+        $endTime = microtime(true);
+        array_push($results, $this->util->averageTime($startTime, $endTime, $this->testRounds, $resultName));
+
+        return $results;
     }
 
-    public function loadNonSingletonRepeatedly()
+    public function loadNonSingletonsRepeatedly()
     {
-        // TODO: Implement loadNonSingletonRepeatedly() method.
+        $results = array();
+
+        $classes = LunrLocatorNames::getNonSingletons();
+
+        foreach ($classes as $class) {
+
+            $LocatedClass = $this->locator->$class();
+            $className = get_class($LocatedClass);
+
+            $startTime = microtime(true);
+            for ($j = 0; $j < $this->testRounds; $j++) {
+                $LocatedClass = $this->locator->$class();
+                unset($LocatedClass);
+            }
+
+            $endTime = microtime(true);
+            array_push($results, $this->util->averageTime($startTime, $endTime, $this->testRounds, $className));
+        }
+
+        return $results;
     }
 
     public function loadNonSingletonsIncrementally()
     {
-        // TODO: Implement loadNonSingletonsIncrementally() method.
+        $results = array();
+        $resultName = "Incremental loading of non singletons";
+        $classes = LunrLocatorNames::getNonSingletons();
+
+        $startTime = microtime(true);
+        for ($j = 0; $j < $this->testRounds; $j++) {
+
+            foreach ($classes as $class) {
+                $LocatedClass = $this->locator->$class();
+                unset($LocatedClass);
+            }
+        }
+        $endTime = microtime(true);
+        array_push($results, $this->util->averageTime($startTime, $endTime, $this->testRounds, $resultName));
+
+        return $results;
     }
 
+    public function loadAllClassesIncrementally()
+    {
+        // TODO: Implement loadAllClassesIncrementally() method.
+    }
 
 }
+
+?>

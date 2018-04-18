@@ -9,6 +9,8 @@
  * @copyright  2012-2018, M2Mobi BV, Amsterdam, The Netherlands
  */
 
+namespace LunrTests;
+
 class LunrLocatorNames
 {
     /**
@@ -21,6 +23,21 @@ class LunrLocatorNames
             [
                 'minimumsingleton',
                 'smallsingleton'
+            ];
+
+        return $singletons;
+    }
+
+    /**
+     * provide all the singleton class names
+     *
+     * @return array a array with all the singleton class names
+     */
+    public static function getNonSingletons(){
+        $singletons =
+            [
+                'minimumnonsingleton',
+                'smallnonsingleton'
             ];
 
         return $singletons;

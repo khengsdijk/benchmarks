@@ -15,7 +15,7 @@ use TestClasses\MinimumSingleton;
 
 $container = new Container();
 
-$container['min'] = $container->factory(function ($c) {
+$container['min'] = $container->factory(function ($container) {
     return new MinimumSingleton();
 
 });

@@ -9,6 +9,7 @@
  * @copyright  2012-2018, M2Mobi BV, Amsterdam, The Netherlands
  */
 
+namespace util;
 
 class Util
 {
@@ -21,13 +22,14 @@ class Util
      *
      * @return array
      */
-    public function averageTime($beginTime, $endTime, $testRounds, $className){
+    public static function averageTime($beginTime, $endTime, $testRounds, $className){
 
-        $averageTime = ($beginTime-$endTime) / $testRounds;
+        echo "\nbegintime: " . $beginTime . "\n";
+        echo "\nendtime: " . $endTime . "\n";
 
+        $averageTime = ($endTime-$beginTime) / $testRounds;
+
+        $averageTime *= 1000;
         return array($className => $averageTime);
     }
-
-
-
 }

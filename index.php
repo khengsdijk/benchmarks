@@ -6,13 +6,12 @@
  * Time: 10:51
  */
 
-// use Lunr\Core\ConfigServiceLocator;
+use LunrTests\LunrTest;
 
 $base = __DIR__;
 // Include libraries
 require_once $base . '/decomposer.autoload.inc.php';
 
-// Define application config lookup path
 set_include_path(
     get_include_path() . ':' .
     $base . '/config' . ':' .
@@ -21,44 +20,25 @@ set_include_path(
 
 $config = new Lunr\Core\Configuration();
 $locator = new Lunr\Core\ConfigServiceLocator($config);
+$util = new util\Util();
 
-$before = microtime(true);
+$lunrtest = new LunrTest($locator, $config, 1000, $util);
 
-// test the loading of a singleton class
-for ($i=0 ; $i<1000 ; $i++)
-{
-    $cliparser = $locator->minimumsingleton();
+$singletonResults = $lunrtest->loadSingletonsRepeatedly();
 
-    echo get_class($cliparser);
-    unset($cliparser);
-}
+$incrementalSingletonResults = $lunrtest->loadSingletonsIncrementally();
 
-$after = microtime(true);
+$nonSingletonResults = $lunrtest->loadNonSingletonsRepeatedly();
 
-echoTime($after, $before, $i);
+$incrementalNonSingletonResults = $lunrtest->loadNonSingletonsIncrementally();
 
-unset($before);
-unset($after);
+print_r($singletonResults);
 
+print_r($incrementalSingletonResults);
 
-$after = microtime(true);
+print_r($nonSingletonResults);
 
-echoTime($after, $before, $i);
+print_r($incrementalNonSingletonResults);
 
 
-function echoTime($after, $before, $iterations=1)
-{
-    $time = ($after-$before) / $iterations;
-    $message = 'the averag';
 
-    if ($time >= 1)
-        echo $time . " seconds\n";
-    else if ($time * 1000 >= 1)
-        echo $time * 1000 . " milliseconds\n";
-    else if ($time * 1000 * 1000 >= 1)
-        echo $time * 1000 * 1000 . " microseconds\n";
-    else
-        echo $time * 1000 * 1000 * 1000 . " nanoseconds\n";
-    echo $time . "\n";
-   // return $time;
-}
