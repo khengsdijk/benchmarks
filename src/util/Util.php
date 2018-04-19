@@ -24,9 +24,6 @@ class Util
      */
     public static function averageTime($beginTime, $endTime, $testRounds, $className){
 
-        echo "\nbegintime: " . $beginTime . "\n";
-        echo "\nendtime: " . $endTime . "\n";
-
         $averageTime = ($endTime-$beginTime) / $testRounds;
 
         $averageTime *= 1000;

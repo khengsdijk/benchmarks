@@ -30,6 +30,9 @@ class LunrTest implements Basetest
      */
     protected $locator;
 
+    /**
+     * @var instance of the util class
+     */
     protected $util;
     /**
      *  instance of the service locator.
@@ -58,6 +61,7 @@ class LunrTest implements Basetest
 
             $LocatedClass = $this->locator->$class();
             $className = get_class($LocatedClass);
+            unset($LocatedClass);
 
             $startTime = microtime(true);
             for ($j = 0; $j < $this->testRounds; $j++) {
@@ -80,7 +84,6 @@ class LunrTest implements Basetest
 
         $startTime = microtime(true);
         for ($j = 0; $j < $this->testRounds; $j++) {
-
             foreach ($classes as $class) {
                 $LocatedClass = $this->locator->$class();
                 unset($LocatedClass);
@@ -108,7 +111,6 @@ class LunrTest implements Basetest
                 $LocatedClass = $this->locator->$class();
                 unset($LocatedClass);
             }
-
             $endTime = microtime(true);
             array_push($results, $this->util->averageTime($startTime, $endTime, $this->testRounds, $className));
         }

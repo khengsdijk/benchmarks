@@ -12,61 +12,169 @@ use TestClasses;
 
 class PimpleTest implements Basetest
 {
-
+    /**
+     * @var instance of the Pimple Container class
+     */
     protected $container;
+
+    /**
+     * @var int Number of times to repeatedly load the test class
+     */
+    protected $testRounds;
+
+    /**
+     * @var instance of the util class
+     */
+    protected $util;
 
     /**
      * BasePimpleTest constructor.
      *
      * @param $container
      */
-    public function __construct($container)
+    public function __construct($container, $util, $testRounds)
     {
         $this->container = $container;
+        $this->util       = $util;
+        $this->testRounds = $testRounds;
     }
 
     public function loadSingletonsRepeatedly()
     {
+        $this->singleTonContainer();
 
+        $results = array();
+
+        $classes = ClassNameProvider::getSingletons();
+
+        foreach ($classes as $class) {
+
+            $LocatedClass = $this->container[$class];
+            $className = get_class($LocatedClass);
+            unset($LocatedClass);
+
+            $startTime = microtime(true);
+            for ($j = 0; $j < $this->testRounds; $j++) {
+
+                $LocatedClass = $this->container[$class];
+                unset($LocatedClass);
+            }
+            $endTime = microtime(true);
+
+            array_push($results, $this->util->averageTime($startTime, $endTime, $this->testRounds, $className));
+        }
+
+        return $results;
     }
 
     public function loadSingletonsIncrementally()
     {
-        // TODO: Implement loadSingletonsIncrementally() method.
+        $this->singleTonContainer();
+
+        $results = array();
+
+        $resultName = "Incremental loading of singletons";
+
+        $classes = ClassNameProvider::getSingletons();
+
+        $startTime = microtime(true);
+        for ($j = 0; $j < $this->testRounds; $j++) {
+            foreach ($classes as $class) {
+
+                $LocatedClass = $this->container[$class];
+                unset($LocatedClass);
+            }
+        }
+        $endTime = microtime(true);
+        array_push($results, $this->util->averageTime($startTime, $endTime, $this->testRounds, $resultName));
+
+        return $results;
     }
 
     public function loadNonSingletonsRepeatedly()
     {
-        // TODO: Implement loadNonSingletonRepeatedly() method.
+        $this->nonSingleTonContainer();
+
+        $results = array();
+
+        $classes = ClassNameProvider::getNonSingletons();
+
+        foreach ($classes as $class) {
+
+            $LocatedClass = $this->container[$class];
+            $className = get_class($LocatedClass);
+            unset($LocatedClass);
+
+            $startTime = microtime(true);
+            for ($j = 0; $j < $this->testRounds; $j++) {
+
+                $LocatedClass = $this->container[$class];
+                unset($LocatedClass);
+            }
+            $endTime = microtime(true);
+
+            array_push($results, $this->util->averageTime($startTime, $endTime, $this->testRounds, $className));
+        }
+
+        return $results;
     }
 
     public function loadNonSingletonsIncrementally()
     {
-        // TODO: Implement loadNonSingletonsIncrementally() method.
+        $this->nonSingleTonContainer();
+
+        $results = array();
+
+        $resultName = "Incremental loading of non singletons";
+
+        $classes = ClassNameProvider::getNonSingletons();
+
+        $startTime = microtime(true);
+        for ($j = 0; $j < $this->testRounds; $j++) {
+            foreach ($classes as $class) {
+
+                $LocatedClass = $this->container[$class];
+                unset($LocatedClass);
+            }
+        }
+        $endTime = microtime(true);
+        array_push($results, $this->util->averageTime($startTime, $endTime, $this->testRounds, $resultName));
+
+        return $results;
     }
 
-
-    public function executeTest()
+    public function loadAllClassesIncrementally()
     {
-        $t1 = microtime(true);
+        // TODO: Implement loadAllClassesIncrementally() method.
+    }
 
-        $container['a'] = $this->container->factory(function ($c) {
-            return new foo();
+    /**
+     * add all the singleton classes to the pimple container
+     */
+    public function singleTonContainer(){
+
+        $this->container['minimumsingleton'] = $this->container->factory(function ($container) {
+            return new TestClasses\MinimumSingleton();
         });
 
-        for ($i = 0; $i < 10000; $i++) {
-            $j = $container['a'];
-        }
+        $this->container['smallsingleton'] = $this->container->factory(function ($container) {
+            return new TestClasses\SmallSingleton();
+        });
 
-        $t2 = microtime(true);
-
-        $results = [
-            'time' => $t2 - $t1,
-            'files' => count(get_included_files()),
-            'memory' => memory_get_peak_usage()/1024/1024
-        ];
-
-        echo json_encode($results) . "\n";
     }
 
+    /**
+     * add all the non singleton classes to the pimple container
+     */
+    public function nonSingleTonContainer(){
+
+        $this->container['minimumnonsingleton'] = $this->container->factory(function ($container) {
+            return new TestClasses\MinimumNonSingleton();
+        });
+
+        $this->container['smallnonsingleton'] = $this->container->factory(function ($container) {
+            return new TestClasses\SmallNonSingleton('foo');
+        });
+
+    }
 }
