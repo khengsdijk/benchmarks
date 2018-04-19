@@ -80,8 +80,43 @@ $phpDiTest = new \PhpDiTests\PhpDiTest($phpDiContainer, $util, 1000);
 
 $phpDiResults = $phpDiTest->loadSingletonsRepeatedly();
 
+$phpDiResultsIncremental = $phpDiTest->loadSingletonsIncrementally();
+
 $phpDiResultsNonSingleton = $phpDiTest->loadNonSingletonsRepeatedly();
+
+$phpDiResultsNonSingletonIncremental = $phpDiTest->loadNonSingletonsIncrementally();
 
 print_r($phpDiResults);
 
+print_r($phpDiResultsIncremental);
+
 print_r($phpDiResultsNonSingleton);
+
+print_r($phpDiResultsNonSingletonIncremental);
+
+echo "\nAURA.DI RESULTS INCOMING \n";
+
+$builder = new \Aura\Di\ContainerBuilder();
+
+$auraContainer = $builder->newInstance();
+
+$auraDiTest = new \auraDiTests\AuraDiTest($auraContainer, $util, 1000);
+
+$phpAuraDiSingletonResults = $auraDiTest->loadSingletonsRepeatedly();
+
+$phpAuraDiResultsIncremental = $auraDiTest->loadSingletonsIncrementally();
+
+$phpAuraDiNonSingletonResults = $auraDiTest->loadNonSingletonsRepeatedly();
+
+$phpAuraDiResultsNonSingletonIncremental = $auraDiTest->loadNonSingletonsIncrementally();
+
+print_r($phpAuraDiSingletonResults);
+
+print_r($phpAuraDiResultsIncremental);
+
+print_r($phpAuraDiNonSingletonResults);
+
+print_r($phpAuraDiResultsNonSingletonIncremental);
+
+echo "\nCONTAINER RESULTS INCOMING \n";
+

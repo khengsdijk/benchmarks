@@ -45,10 +45,9 @@ class PhpDiTest implements Basetest
     {
         $results = array();
 
-        $classes = $this->singletonNameProvider();;
+        $classes = $this->singletonNameProvider();
 
         foreach ($classes as $class) {
-
             $startTime = microtime(true);
             for ($i = 0; $i < $this->testRounds; $i++) {
                 $min = $this->container->get($class);
@@ -57,14 +56,32 @@ class PhpDiTest implements Basetest
             $endTime = microtime(true);
 
             array_push($results, $this->util->averageTime($startTime, $endTime, $this->testRounds, $class));
-
-            return $results;
         }
+
+        return $results;
     }
 
     public function loadSingletonsIncrementally()
     {
-        // TODO: Implement loadSingletonsIncrementally() method.
+
+        $results = array();
+
+        $resultName = "Incremental loading of singletons";
+
+        $classes = $this->singletonNameProvider();
+
+        $startTime = microtime(true);
+        for ($j = 0; $j < $this->testRounds; $j++) {
+            foreach ($classes as $class) {
+
+                $LocatedClass = $this->container->get($class);
+                unset($LocatedClass);
+            }
+        }
+        $endTime = microtime(true);
+        array_push($results, $this->util->averageTime($startTime, $endTime, $this->testRounds, $resultName));
+
+        return $results;
     }
 
     public function loadNonSingletonsRepeatedly()
@@ -74,11 +91,9 @@ class PhpDiTest implements Basetest
         $classes = $this->nonSingletonNameProvider();
 
         foreach ($classes as $class) {
-
             $startTime = microtime(true);
             for ($i = 0; $i < $this->testRounds; $i++) {
                 $min = $this->container->get($class);
-
                 unset($min);
             }
             $endTime = microtime(true);
@@ -90,7 +105,24 @@ class PhpDiTest implements Basetest
 
     public function loadNonSingletonsIncrementally()
     {
-        // TODO: Implement loadNonSingletonsIncrementally() method.
+        $results = array();
+
+        $resultName = "Incremental loading of non singletons";
+
+        $classes = $this->NonSingletonNameProvider();
+
+        $startTime = microtime(true);
+        for ($j = 0; $j < $this->testRounds; $j++) {
+            foreach ($classes as $class) {
+
+                $LocatedClass = $this->container->get($class);
+                unset($LocatedClass);
+            }
+        }
+        $endTime = microtime(true);
+        array_push($results, $this->util->averageTime($startTime, $endTime, $this->testRounds, $resultName));
+
+        return $results;
     }
 
     public function loadAllClassesIncrementally()

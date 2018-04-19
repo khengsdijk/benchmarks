@@ -24,13 +24,22 @@ class ComposerStaticInitb8eac56d2372b46a72054d45d9c545c3
             'PhpParser\\' => 10,
             'PhpDocReader\\' => 13,
         ),
+        'L' => 
+        array (
+            'League\\Container\\' => 17,
+        ),
         'I' => 
         array (
             'Invoker\\' => 8,
+            'Interop\\Container\\' => 18,
         ),
         'D' => 
         array (
             'DI\\' => 3,
+        ),
+        'A' => 
+        array (
+            'Aura\\Di\\' => 8,
         ),
     );
 
@@ -59,13 +68,25 @@ class ComposerStaticInitb8eac56d2372b46a72054d45d9c545c3
         array (
             0 => __DIR__ . '/..' . '/php-di/phpdoc-reader/src/PhpDocReader',
         ),
+        'League\\Container\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/league/container/src',
+        ),
         'Invoker\\' => 
         array (
             0 => __DIR__ . '/..' . '/php-di/invoker/src',
         ),
+        'Interop\\Container\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/container-interop/container-interop/src/Interop/Container',
+        ),
         'DI\\' => 
         array (
             0 => __DIR__ . '/..' . '/php-di/php-di/src',
+        ),
+        'Aura\\Di\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/aura/di/src',
         ),
     );
 

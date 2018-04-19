@@ -1,5 +1,7 @@
 {
   "require": {
-      "php-di/php-di": "6.0"
+      "php-di/php-di": "6.0",
+      "aura/di": "*",
+      "league/container": "*"
   }
 }
