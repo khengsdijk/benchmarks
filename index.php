@@ -120,3 +120,22 @@ print_r($phpAuraDiResultsNonSingletonIncremental);
 
 echo "\nCONTAINER RESULTS INCOMING \n";
 
+$containerContainer = new League\Container\Container();
+
+$containerTest = new \containerTests\ContainerTest($containerContainer, $util, 1000);
+
+$containerTestResult = $containerTest->loadSingletonsRepeatedly();
+
+$containerResultsIncremental = $containerTest->loadSingletonsIncrementally();
+
+$containerNonSingletonResults = $containerTest->loadNonSingletonsRepeatedly();
+
+$containerResultsNonSingletonIncremental = $containerTest->loadNonSingletonsIncrementally();
+
+print_r($containerTestResult);
+
+print_r($containerResultsIncremental);
+
+print_r($containerNonSingletonResults);
+
+print_r($containerResultsNonSingletonIncremental);
