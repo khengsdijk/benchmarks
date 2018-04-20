@@ -6,13 +6,13 @@
  * Time: 10:51
  */
 
-// use Lunr\Core\ConfigServiceLocator;
+use LunrTests\LunrTest;
 
 $base = __DIR__;
 // Include libraries
 require_once $base . '/decomposer.autoload.inc.php';
+require __DIR__ . '/vendor/autoload.php';
 
-// Define application config lookup path
 set_include_path(
     get_include_path() . ':' .
     $base . '/config' . ':' .
@@ -20,45 +20,122 @@ set_include_path(
 );
 
 $config = new Lunr\Core\Configuration();
+
+//lunr stuff
+
+echo "\n LUNR RESULTS INCOMING\n";
+
 $locator = new Lunr\Core\ConfigServiceLocator($config);
+$util = new util\Util();
 
-$before = microtime(true);
+$lunrtest = new LunrTest($locator, $config, 1000, $util);
 
-// test the loading of a singleton class
-for ($i=0 ; $i<1000 ; $i++)
-{
-    $cliparser = $locator->minimumsingleton();
+$singletonResults = $lunrtest->loadSingletonsRepeatedly();
 
-    echo get_class($cliparser);
-    unset($cliparser);
-}
+$incrementalSingletonResults = $lunrtest->loadSingletonsIncrementally();
 
-$after = microtime(true);
+$nonSingletonResults = $lunrtest->loadNonSingletonsRepeatedly();
 
-echoTime($after, $before, $i);
+$incrementalNonSingletonResults = $lunrtest->loadNonSingletonsIncrementally();
 
-unset($before);
-unset($after);
+print_r($singletonResults);
 
+print_r($incrementalSingletonResults);
 
-$after = microtime(true);
+print_r($nonSingletonResults);
 
-echoTime($after, $before, $i);
+print_r($incrementalNonSingletonResults);
 
+// pimple stuff
 
-function echoTime($after, $before, $iterations=1)
-{
-    $time = ($after-$before) / $iterations;
-    $message = 'the averag';
+echo "\n PIMPLE RESULTS INCOMING \n";
 
-    if ($time >= 1)
-        echo $time . " seconds\n";
-    else if ($time * 1000 >= 1)
-        echo $time * 1000 . " milliseconds\n";
-    else if ($time * 1000 * 1000 >= 1)
-        echo $time * 1000 * 1000 . " microseconds\n";
-    else
-        echo $time * 1000 * 1000 * 1000 . " nanoseconds\n";
-    echo $time . "\n";
-   // return $time;
-}
+$pimpleContainer = new Pimple\Container();
+
+$pimpletest = new PimpleTests\PimpleTest($pimpleContainer, $util, 1000);
+
+$pimpleSingletonResult = $pimpletest->loadSingletonsRepeatedly();
+
+$pimpleSingletonIncrementalResult = $pimpletest->loadSingletonsIncrementally();
+
+$pimpleNonSingletonResult = $pimpletest->loadNonSingletonsRepeatedly();
+
+$pimpleNonSingletonIncrementalResult = $pimpletest->loadNonSingletonsIncrementally();
+
+print_r($pimpleSingletonResult);
+
+print_r($pimpleSingletonIncrementalResult);
+
+print_r($pimpleNonSingletonResult);
+
+print_r($pimpleNonSingletonIncrementalResult);
+
+// php-di stuff
+
+echo "\n PHP-DI RESULTS INCOMING \n";
+
+$phpDiContainer = new \DI\Container();
+
+$phpDiTest = new \PhpDiTests\PhpDiTest($phpDiContainer, $util, 1000);
+
+$phpDiResults = $phpDiTest->loadSingletonsRepeatedly();
+
+$phpDiResultsIncremental = $phpDiTest->loadSingletonsIncrementally();
+
+$phpDiResultsNonSingleton = $phpDiTest->loadNonSingletonsRepeatedly();
+
+$phpDiResultsNonSingletonIncremental = $phpDiTest->loadNonSingletonsIncrementally();
+
+print_r($phpDiResults);
+
+print_r($phpDiResultsIncremental);
+
+print_r($phpDiResultsNonSingleton);
+
+print_r($phpDiResultsNonSingletonIncremental);
+
+echo "\nAURA.DI RESULTS INCOMING \n";
+
+$builder = new \Aura\Di\ContainerBuilder();
+
+$auraContainer = $builder->newInstance();
+
+$auraDiTest = new \auraDiTests\AuraDiTest($auraContainer, $util, 1000);
+
+$phpAuraDiSingletonResults = $auraDiTest->loadSingletonsRepeatedly();
+
+$phpAuraDiResultsIncremental = $auraDiTest->loadSingletonsIncrementally();
+
+$phpAuraDiNonSingletonResults = $auraDiTest->loadNonSingletonsRepeatedly();
+
+$phpAuraDiResultsNonSingletonIncremental = $auraDiTest->loadNonSingletonsIncrementally();
+
+print_r($phpAuraDiSingletonResults);
+
+print_r($phpAuraDiResultsIncremental);
+
+print_r($phpAuraDiNonSingletonResults);
+
+print_r($phpAuraDiResultsNonSingletonIncremental);
+
+echo "\nCONTAINER RESULTS INCOMING \n";
+
+$containerContainer = new League\Container\Container();
+
+$containerTest = new \containerTests\ContainerTest($containerContainer, $util, 1000);
+
+$containerTestResult = $containerTest->loadSingletonsRepeatedly();
+
+$containerResultsIncremental = $containerTest->loadSingletonsIncrementally();
+
+$containerNonSingletonResults = $containerTest->loadNonSingletonsRepeatedly();
+
+$containerResultsNonSingletonIncremental = $containerTest->loadNonSingletonsIncrementally();
+
+print_r($containerTestResult);
+
+print_r($containerResultsIncremental);
+
+print_r($containerNonSingletonResults);
+
+print_r($containerResultsNonSingletonIncremental);

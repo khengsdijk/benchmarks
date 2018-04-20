@@ -1,13 +1,4 @@
 {
-    "TestClasses": {
-      "url": "https://github.com/khengsdijk/testclasses.git",
-      "version": "0.1",
-      "revision": "master",
-      "psr4": {
-        "prefix": "TestClasses",
-        "search-path": "/src/TestClasses/"
-      }
-    },
 	"Lunr": {
         "url": "m2:/mmw/lunr.git",
         "version": "0.4",
@@ -27,6 +18,15 @@
       }
     },
     "Pimple": {
+        "url": "https://github.com/silexphp/Pimple.git",
+        "version": "3.2.3",
+        "revision": "master",
+        "psr4": {
+          "prefix": "Pimple",
+          "search-path": "/src/Pimple/"
+        }
+    },
+    "PHP-DI": {
         "url": "https://github.com/silexphp/Pimple.git",
         "version": "3.2.3",
         "revision": "master",
