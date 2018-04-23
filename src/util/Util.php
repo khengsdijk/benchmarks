@@ -25,8 +25,14 @@ class Util
     public static function averageTime($beginTime, $endTime, $testRounds, $className){
 
         $averageTime = ($endTime-$beginTime) / $testRounds;
-
         $averageTime *= 1000;
-        return array($className => $averageTime);
+
+        return array($className, $averageTime);
     }
+
+
+    public function implodeResults(){
+
+    }
+
 }

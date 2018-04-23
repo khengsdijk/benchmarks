@@ -143,6 +143,16 @@ class ContainerTest implements Basetest
         // TODO: Implement loadAllClassesIncrementally() method.
     }
 
+    public function loadAtoZClasses()
+    {
+        // TODO: Implement loadAtoZClasses() method.
+    }
+
+    public function executeTests()
+    {
+        // TODO: Implement executeTests() method.
+    }
+
     /**
      * add all the singleton classes to the pimple container
      */

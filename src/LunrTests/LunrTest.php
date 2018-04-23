@@ -143,6 +143,17 @@ class LunrTest implements Basetest
         // TODO: Implement loadAllClassesIncrementally() method.
     }
 
+    public function loadAtoZClasses()
+    {
+        // TODO: Implement loadAtoZClasses() method.
+    }
+
+    public function executeTests()
+    {
+
+
+    }
+
 }
 
 ?>

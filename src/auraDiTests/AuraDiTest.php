@@ -136,6 +136,17 @@ class AuraDiTest implements Basetest
         // TODO: Implement loadAllClassesIncrementally() method.
     }
 
+    public function loadAtoZClasses()
+    {
+        // TODO: Implement loadAtoZClasses() method.
+    }
+
+    public function executeTests()
+    {
+        // TODO: Implement executeTests() method.
+    }
+
+
     public function singletonNameProvider(){
         $singletons =
             [

@@ -24,5 +24,7 @@ interface Basetest
 
     public function loadAllClassesIncrementally();
 
+    public function loadAtoZClasses();
 
+    public function executeTests();
 }
