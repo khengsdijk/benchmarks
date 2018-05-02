@@ -5,13 +5,13 @@
  * Date: 29-3-18
  * Time: 10:51
  */
-
 use LunrTests\LunrTest;
 
 $base = __DIR__;
 // Include libraries
-require_once $base . '/decomposer.autoload.inc.php';
+require __DIR__  . '/decomposer.autoload.inc.php';
 require __DIR__ . '/vendor/autoload.php';
+
 
 set_include_path(
     get_include_path() . ':' .
@@ -21,121 +21,73 @@ set_include_path(
 
 $config = new Lunr\Core\Configuration();
 
-//lunr stuff
+$html = '<html> <body> ';
 
+//lunr stuff
 echo "\n LUNR RESULTS INCOMING\n";
 
-$locator = new Lunr\Core\ConfigServiceLocator($config);
-$util = new util\Util();
+    $locator = new Lunr\Core\ConfigServiceLocator($config);
+    $util = new util\Util();
+    $htmlGenerator = new \util\HtmlGenerator();
 
-$lunrtest = new LunrTest($locator, $config, 1000, $util);
+    $lunrtest = new LunrTest($locator, $config, 1000, $util);
 
-$singletonResults = $lunrtest->loadSingletonsRepeatedly();
+    $lunrResults = $lunrtest->executeTests();
 
-$incrementalSingletonResults = $lunrtest->loadSingletonsIncrementally();
+    $html .= $htmlGenerator->procesResults('lunr', $lunrResults);
+    print_r($lunrResults);
 
-$nonSingletonResults = $lunrtest->loadNonSingletonsRepeatedly();
 
-$incrementalNonSingletonResults = $lunrtest->loadNonSingletonsIncrementally();
-
-print_r($singletonResults);
-
-print_r($incrementalSingletonResults);
-
-print_r($nonSingletonResults);
-
-print_r($incrementalNonSingletonResults);
 
 // pimple stuff
-
 echo "\n PIMPLE RESULTS INCOMING \n";
 
-$pimpleContainer = new Pimple\Container();
+    $pimpleContainer = new Pimple\Container();
 
-$pimpletest = new PimpleTests\PimpleTest($pimpleContainer, $util, 1000);
+    $pimpletest = new PimpleTests\PimpleTest($pimpleContainer, $util, 1000);
 
-$pimpleSingletonResult = $pimpletest->loadSingletonsRepeatedly();
-
-$pimpleSingletonIncrementalResult = $pimpletest->loadSingletonsIncrementally();
-
-$pimpleNonSingletonResult = $pimpletest->loadNonSingletonsRepeatedly();
-
-$pimpleNonSingletonIncrementalResult = $pimpletest->loadNonSingletonsIncrementally();
-
-print_r($pimpleSingletonResult);
-
-print_r($pimpleSingletonIncrementalResult);
-
-print_r($pimpleNonSingletonResult);
-
-print_r($pimpleNonSingletonIncrementalResult);
+    $pimpleResults = $pimpletest->executeTests();
+    $html .= $htmlGenerator->procesResults('pimple', $pimpleResults);
+    print_r($pimpleResults);
 
 // php-di stuff
-
 echo "\n PHP-DI RESULTS INCOMING \n";
 
-$phpDiContainer = new \DI\Container();
+    $phpDiContainer = new \DI\Container();
 
-$phpDiTest = new \PhpDiTests\PhpDiTest($phpDiContainer, $util, 1000);
+    $phpDiTest = new \PhpDiTests\PhpDiTest($phpDiContainer, $util, 1000);
 
-$phpDiResults = $phpDiTest->loadSingletonsRepeatedly();
+    $phpDiResults = $phpDiTest->executeTests();
 
-$phpDiResultsIncremental = $phpDiTest->loadSingletonsIncrementally();
+    $html .= $htmlGenerator->procesResults('php-DI', $phpDiResults);
+    print_r($phpDiResults);
 
-$phpDiResultsNonSingleton = $phpDiTest->loadNonSingletonsRepeatedly();
-
-$phpDiResultsNonSingletonIncremental = $phpDiTest->loadNonSingletonsIncrementally();
-
-print_r($phpDiResults);
-
-print_r($phpDiResultsIncremental);
-
-print_r($phpDiResultsNonSingleton);
-
-print_r($phpDiResultsNonSingletonIncremental);
-
+//auro results
 echo "\nAURA.DI RESULTS INCOMING \n";
 
-$builder = new \Aura\Di\ContainerBuilder();
+    $builder = new \Aura\Di\ContainerBuilder();
+    $auraContainer = $builder->newInstance();
+    $auraDiTest = new \auraDiTests\AuraDiTest($auraContainer, $util, 1000);
 
-$auraContainer = $builder->newInstance();
+    $auraDiResults = $auraDiTest->executeTests();
 
-$auraDiTest = new \auraDiTests\AuraDiTest($auraContainer, $util, 1000);
+    $html .= $htmlGenerator->procesResults('aura-DI', $auraDiResults);
+    print_r($auraDiResults);
 
-$phpAuraDiSingletonResults = $auraDiTest->loadSingletonsRepeatedly();
-
-$phpAuraDiResultsIncremental = $auraDiTest->loadSingletonsIncrementally();
-
-$phpAuraDiNonSingletonResults = $auraDiTest->loadNonSingletonsRepeatedly();
-
-$phpAuraDiResultsNonSingletonIncremental = $auraDiTest->loadNonSingletonsIncrementally();
-
-print_r($phpAuraDiSingletonResults);
-
-print_r($phpAuraDiResultsIncremental);
-
-print_r($phpAuraDiNonSingletonResults);
-
-print_r($phpAuraDiResultsNonSingletonIncremental);
-
+// container stuff
 echo "\nCONTAINER RESULTS INCOMING \n";
 
-$containerContainer = new League\Container\Container();
+    $containerContainer = new League\Container\Container();
+    $containerTest = new \containerTests\ContainerTest($containerContainer, $util, 1000);
 
-$containerTest = new \containerTests\ContainerTest($containerContainer, $util, 1000);
+    $ContainerResults = $containerTest->executeTests();
 
-$containerTestResult = $containerTest->loadSingletonsRepeatedly();
+    $html .= $htmlGenerator->procesResults('container', $ContainerResults);
+    print_r($ContainerResults);
 
-$containerResultsIncremental = $containerTest->loadSingletonsIncrementally();
 
-$containerNonSingletonResults = $containerTest->loadNonSingletonsRepeatedly();
+$html .= ' </body> </html>';
+$html .= $htmlGenerator->getStyle();
 
-$containerResultsNonSingletonIncremental = $containerTest->loadNonSingletonsIncrementally();
-
-print_r($containerTestResult);
-
-print_r($containerResultsIncremental);
-
-print_r($containerNonSingletonResults);
-
-print_r($containerResultsNonSingletonIncremental);
+file_put_contents('test-results.html', $html);
+echo $html;

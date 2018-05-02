@@ -145,13 +145,36 @@ class LunrTest implements Basetest
 
     public function loadAtoZClasses()
     {
-        // TODO: Implement loadAtoZClasses() method.
+        $results = array();
+
+        $startTime = microtime(true);
+        for ($i = 0; $i < $this->testRounds; $i++) {
+
+            $LocatedClass = $this->locator->Z();
+            unset($LocatedClass);
+
+        }
+        $endTime = microtime(true);
+
+        array_push($results, $this->util->averageTime($startTime, $endTime, $this->testRounds, 'AtoZ'));
+
+        return $results;
     }
 
+    /**
+     * @return array the results of the tests
+     */
     public function executeTests()
     {
+        $resultArray = array();
 
+        $resultArray['singletonRepeatedly']       = $this->loadSingletonsRepeatedly();
+        $resultArray['singletonIncrementally']    = $this->loadSingletonsIncrementally();
+        $resultArray['nonSingletonRepeatedly']    = $this->loadNonSingletonsRepeatedly();
+        $resultArray['nonSingletonIncrementally'] = $this->loadNonSingletonsIncrementally();
+        $resultArray['AtoZ']                      = $this->loadAtoZClasses();
 
+        return $resultArray;
     }
 
 }

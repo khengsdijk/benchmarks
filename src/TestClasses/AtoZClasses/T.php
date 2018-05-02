@@ -10,20 +10,20 @@
  */
 
 
-namespace TestClasses;
+namespace TestClasses\AtoZClasses;
 
 
 class T
 {
-    private $T;
+    private $S;
 
     /**
      * SmallNonSingleton constructor.
-     * @param T
+     * @param S
      */
-    public function __construct(T $T)
+    public function __construct(S $S)
     {
-        $this->T = $T;
+        $this->S = $S;
     }
 
 

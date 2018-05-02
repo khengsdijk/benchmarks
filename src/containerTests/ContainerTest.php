@@ -145,12 +145,33 @@ class ContainerTest implements Basetest
 
     public function loadAtoZClasses()
     {
-        // TODO: Implement loadAtoZClasses() method.
+        $this->AtoZContainer();
+
+        $results = array();
+
+        $startTime = microtime(true);
+        for ($i = 0; $i < $this->testRounds; $i++) {
+            $LocatedClass = $this->container->get('Z');
+            unset($LocatedClass);
+        }
+        $endTime = microtime(true);
+
+        array_push($results, $this->util->averageTime($startTime, $endTime, $this->testRounds, 'AtoZ'));
+
+        return $results;
     }
 
     public function executeTests()
     {
-        // TODO: Implement executeTests() method.
+        $resultArray = array();
+
+        $resultArray['singletonRepeatedly'] = $this->loadSingletonsRepeatedly();
+        $resultArray['singletonIncrementally'] = $this->loadSingletonsIncrementally();
+        $resultArray['nonSingletonRepeatedly'] = $this->loadNonSingletonsRepeatedly();
+        $resultArray['nonSingletonIncrementally'] = $this->loadNonSingletonsIncrementally();
+        $resultArray['AtoZ']                      = $this->loadAtoZClasses();
+
+        return $resultArray;
     }
 
     /**
@@ -171,6 +192,86 @@ class ContainerTest implements Basetest
         $this->container->add('minimumNonSingleton', '\TestClasses\MinimumNonSingleton');
 
         $this->container->add('smallNonSingleton', '\TestClasses\smallNonSingleton');
+    }
+
+    public function AtoZContainer(){
+        $this->container->add('A', '\TestClasses\AtoZClasses\A');
+
+        $this->container->add('B', '\TestClasses\AtoZClasses\B')
+                        ->withArgument('A');
+
+        $this->container->add('C', '\TestClasses\AtoZClasses\C')
+                        ->withArgument('B');
+
+        $this->container->add('D', '\TestClasses\AtoZClasses\D')
+                        ->withArgument('C');
+
+        $this->container->add('E', '\TestClasses\AtoZClasses\E')
+                        ->withArgument('D');
+
+        $this->container->add('F', '\TestClasses\AtoZClasses\F')
+                        ->withArgument('E');
+
+        $this->container->add('G', '\TestClasses\AtoZClasses\G')
+                        ->withArgument('F');
+
+        $this->container->add('H', '\TestClasses\AtoZClasses\H')
+                        ->withArgument('G');
+
+        $this->container->add('I', '\TestClasses\AtoZClasses\I')
+                        ->withArgument('H');
+
+        $this->container->add('J', '\TestClasses\AtoZClasses\J')
+                        ->withArgument('I');
+
+        $this->container->add('K', '\TestClasses\AtoZClasses\K')
+                        ->withArgument('J');
+
+        $this->container->add('L', '\TestClasses\AtoZClasses\L')
+                        ->withArgument('K');
+
+        $this->container->add('M', '\TestClasses\AtoZClasses\M')
+                        ->withArgument('L');
+
+        $this->container->add('N', '\TestClasses\AtoZClasses\N')
+                        ->withArgument('M');
+
+        $this->container->add('O', '\TestClasses\AtoZClasses\O')
+                        ->withArgument('N');
+
+        $this->container->add('P', '\TestClasses\AtoZClasses\P')
+                        ->withArgument('O');
+
+        $this->container->add('Q', '\TestClasses\AtoZClasses\Q')
+                        ->withArgument('P');
+
+        $this->container->add('R', '\TestClasses\AtoZClasses\R')
+                        ->withArgument('Q');
+
+        $this->container->add('S', '\TestClasses\AtoZClasses\S')
+                        ->withArgument('R');
+
+        $this->container->add('T', '\TestClasses\AtoZClasses\T')
+                        ->withArgument('S');
+
+        $this->container->add('U', '\TestClasses\AtoZClasses\U')
+                        ->withArgument('T');
+
+        $this->container->add('V', '\TestClasses\AtoZClasses\V')
+                        ->withArgument('U');
+
+        $this->container->add('W', '\TestClasses\AtoZClasses\W')
+                        ->withArgument('V');
+
+        $this->container->add('X', '\TestClasses\AtoZClasses\X')
+                        ->withArgument('W');
+
+        $this->container->add('Y', '\TestClasses\AtoZClasses\Y')
+                        ->withArgument('X');
+
+        $this->container->add('Z', '\TestClasses\AtoZClasses\Z')
+                        ->withArgument('Y');
+
     }
 
     public function singletonNameProvider(){

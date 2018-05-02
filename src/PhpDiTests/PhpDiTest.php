@@ -132,12 +132,31 @@ class PhpDiTest implements Basetest
 
     public function loadAtoZClasses()
     {
-        // TODO: Implement loadAtoZClasses() method.
+        $results = array();
+
+            $startTime = microtime(true);
+            for ($i = 0; $i < $this->testRounds; $i++) {
+                $min = $this->container->get('TestClasses\AtoZClasses\Z');
+                unset($min);
+            }
+            $endTime = microtime(true);
+
+            array_push($results, $this->util->averageTime($startTime, $endTime, $this->testRounds, 'AtoZ'));
+
+        return $results;
     }
 
     public function executeTests()
     {
-        // TODO: Implement executeTests() method.
+        $resultArray = array();
+
+        $resultArray['singletonRepeatedly']       = $this->loadSingletonsRepeatedly();
+        $resultArray['singletonIncrementally']    = $this->loadSingletonsIncrementally();
+        $resultArray['nonSingletonRepeatedly']    = $this->loadNonSingletonsRepeatedly();
+        $resultArray['nonSingletonIncrementally'] = $this->loadNonSingletonsIncrementally();
+        $resultArray['AtoZ']                      = $this->loadAtoZClasses();
+
+        return $resultArray;
     }
 
     public function singletonNameProvider(){

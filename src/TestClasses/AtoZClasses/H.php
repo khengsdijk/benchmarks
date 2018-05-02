@@ -13,18 +13,16 @@
 namespace TestClasses\AtoZClasses;
 
 
-class Z
+class H
 {
-    private $Y;
+    private $G;
 
     /**
      * SmallNonSingleton constructor.
-     * @param Y
+     * @param G
      */
-    public function __construct(Y $Y)
+    public function __construct(G $G)
     {
-        $this->Y = $Y;
+        $this->G = $G;
     }
-
-
 }

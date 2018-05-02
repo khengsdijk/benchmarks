@@ -138,12 +138,33 @@ class AuraDiTest implements Basetest
 
     public function loadAtoZClasses()
     {
-        // TODO: Implement loadAtoZClasses() method.
+        $results = array();
+
+        $startTime = microtime(true);
+        for ($i = 0; $i < $this->testRounds; $i++) {
+            $min = $this->container->newInstance('TestClasses\AtoZClasses\Z');
+            unset($min);
+        }
+        $endTime = microtime(true);
+
+        array_push($results, $this->util->averageTime($startTime, $endTime, $this->testRounds, 'AtoZ'));
+
+        return $results;
     }
 
     public function executeTests()
     {
-        // TODO: Implement executeTests() method.
+        $this->setAtoZparams();
+
+        $resultArray = array();
+
+        $resultArray['singletonRepeatedly']       = $this->loadSingletonsRepeatedly();
+        $resultArray['singletonIncrementally']    = $this->loadSingletonsIncrementally();
+        $resultArray['nonSingletonRepeatedly']    = $this->loadNonSingletonsRepeatedly();
+        $resultArray['nonSingletonIncrementally'] = $this->loadNonSingletonsIncrementally();
+        $resultArray['AtoZ']                      = $this->loadAtoZClasses();
+
+        return $resultArray;
     }
 
 
@@ -166,5 +187,59 @@ class AuraDiTest implements Basetest
 
         return $singletons;
     }
+
+    public function setAtoZparams(){
+
+        $this->container->params['TestClasses\AtoZClasses\B'][0] = $this->container->lazyNew('TestClasses\AtoZClasses\A');
+
+        $this->container->params['TestClasses\AtoZClasses\C'][0] = $this->container->lazyNew('TestClasses\AtoZClasses\B');
+
+        $this->container->params['TestClasses\AtoZClasses\D'][0] = $this->container->lazyNew('TestClasses\AtoZClasses\C');
+
+        $this->container->params['TestClasses\AtoZClasses\E'][0] = $this->container->lazyNew('TestClasses\AtoZClasses\D');
+
+        $this->container->params['TestClasses\AtoZClasses\F'][0] = $this->container->lazyNew('TestClasses\AtoZClasses\E');
+
+        $this->container->params['TestClasses\AtoZClasses\G'][0] = $this->container->lazyNew('TestClasses\AtoZClasses\F');
+
+        $this->container->params['TestClasses\AtoZClasses\H'][0] = $this->container->lazyNew('TestClasses\AtoZClasses\G');
+
+        $this->container->params['TestClasses\AtoZClasses\I'][0] = $this->container->lazyNew('TestClasses\AtoZClasses\H');
+
+        $this->container->params['TestClasses\AtoZClasses\J'][0] = $this->container->lazyNew('TestClasses\AtoZClasses\I');
+
+        $this->container->params['TestClasses\AtoZClasses\K'][0] = $this->container->lazyNew('TestClasses\AtoZClasses\J');
+
+        $this->container->params['TestClasses\AtoZClasses\L'][0] = $this->container->lazyNew('TestClasses\AtoZClasses\K');
+
+        $this->container->params['TestClasses\AtoZClasses\M'][0] = $this->container->lazyNew('TestClasses\AtoZClasses\L');
+
+        $this->container->params['TestClasses\AtoZClasses\N'][0] = $this->container->lazyNew('TestClasses\AtoZClasses\M');
+
+        $this->container->params['TestClasses\AtoZClasses\O'][0] = $this->container->lazyNew('TestClasses\AtoZClasses\N');
+
+        $this->container->params['TestClasses\AtoZClasses\P'][0] = $this->container->lazyNew('TestClasses\AtoZClasses\O');
+
+        $this->container->params['TestClasses\AtoZClasses\Q'][0] = $this->container->lazyNew('TestClasses\AtoZClasses\P');
+
+        $this->container->params['TestClasses\AtoZClasses\R'][0] = $this->container->lazyNew('TestClasses\AtoZClasses\Q');
+
+        $this->container->params['TestClasses\AtoZClasses\S'][0] = $this->container->lazyNew('TestClasses\AtoZClasses\R');
+
+        $this->container->params['TestClasses\AtoZClasses\T'][0] = $this->container->lazyNew('TestClasses\AtoZClasses\S');
+
+        $this->container->params['TestClasses\AtoZClasses\U'][0] = $this->container->lazyNew('TestClasses\AtoZClasses\T');
+
+        $this->container->params['TestClasses\AtoZClasses\V'][0] = $this->container->lazyNew('TestClasses\AtoZClasses\U');
+
+        $this->container->params['TestClasses\AtoZClasses\W'][0] = $this->container->lazyNew('TestClasses\AtoZClasses\V');
+
+        $this->container->params['TestClasses\AtoZClasses\X'][0] = $this->container->lazyNew('TestClasses\AtoZClasses\W');
+
+        $this->container->params['TestClasses\AtoZClasses\Y'][0] = $this->container->lazyNew('TestClasses\AtoZClasses\X');
+
+        $this->container->params['TestClasses\AtoZClasses\Z'][0] = $this->container->lazyNew('TestClasses\AtoZClasses\Y');
+    }
+
 
 }

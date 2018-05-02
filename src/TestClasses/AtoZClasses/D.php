@@ -10,7 +10,7 @@
  */
 
 
-namespace TestClasses;
+namespace TestClasses\AtoZClasses;
 
 
 class D

@@ -10,7 +10,7 @@
  */
 
 
-namespace TestClasses;
+namespace TestClasses\AtoZClasses;
 
 
 class A
@@ -18,7 +18,6 @@ class A
 
     /**
      * SmallNonSingleton constructor.
-     * @param $foo
      */
     public function __construct()
     {

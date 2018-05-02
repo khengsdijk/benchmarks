@@ -15,42 +15,58 @@ namespace util;
 
 class HtmlGenerator
 {
+    /**
+     * proces the results of the tests so it can be parsed to html
+     *
+     * @param $containerName string the name of the container
+     * @param $results       array  the raw test results
+     *
+     * @return string the test results in html format
+     */
+    public function procesResults($containerName, $results){
+
+        $htmlstuff = '
+            <table style="width:100%">
+            <tr>
+                <th colspan="2" class="framework">' . $containerName . '</th>
+            </tr>   
+            <tr>
+                <th>test name </th>
+                <th>time in milliseconds</th> 
+            </tr>';
+
+
+        foreach ($results as $result){
+            $htmlstuff .= $this->exportResults($result);
+        }
+
+
+        $htmlstuff .= ' </table>';
+
+        return $htmlstuff;
+    }
 
     /**
      * parse the test result to html format
      *
      * @param $results array the results of a test container
+     *
+     * @return string the test result in html format
      */
-    public function exportResults($containerName, $results)
+    public function exportResults($results)
     {
-
-        $htmlstuff = '
-            <table style="width:100%">
-            <tr>
-                <th colspan="2" id="framework">' . $containerName . '</th>
-            </tr>   
-            <tr>
-                <th>test name </th>
-                <th>time</th> 
-            </tr>';
-
+        $htmlstuff = '';
 
             foreach ($results as $result){
-
+                $htmlstuff .= '
+                <tr>
+                    <td>'. $result[0] .'</td>
+                    <td>'. $result[1] .'</td> 
+                </tr>
+                  ';
             }
 
-
-            $html = '
-            <tr>
-                <td>Singleton</td>
-                <td>1</td> 
-            </tr>
-            <tr>
-                <td>non singleton</td>
-                <td>2</td> 
-             </tr>
-            </table>';
-
+        return $htmlstuff;
     }
 
 
@@ -73,12 +89,11 @@ class HtmlGenerator
                     border-spacing: 5px;
                 }
 
-                #framework {
+                .framework {
                     border: #ffffff;
                     text-align: center;
                 }   
                  </style>';
-
     }
 
 }
