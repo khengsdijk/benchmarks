@@ -1,6 +1,6 @@
 <?php
 /**
- * This file contains a large singletonclass
+ * This file contains the DatabaseDMLQueryBuilderQueryPartsWithTest class.
  *
  * PHP Version 7.0
  *
@@ -13,25 +13,21 @@
 namespace TestClasses;
 
 
-use function Sodium\compare;
-
-class LargeSingleton
+class LargeNonSingleton
 {
-
-    // Hold an instance of the class
-    private static $instance;
-
     private $foo;
 
     private $things;
 
-    // The singleton method
-    public static function LargeSingleton()
+    /**
+     * LargeNonSingleton constructor.
+     * @param $foo
+     * @param $things
+     */
+    public function __construct(string $foo = 'foo', string $things = 'things')
     {
-        if (!isset(self::$instance)) {
-            self::$instance = new LargeSingleton();
-        }
-        return self::$instance;
+        $this->foo = $foo;
+        $this->things = $things;
     }
 
     /**

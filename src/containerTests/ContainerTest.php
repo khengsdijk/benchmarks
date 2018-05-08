@@ -165,9 +165,9 @@ class ContainerTest implements Basetest
     {
         $resultArray = array();
 
-        $resultArray['singletonRepeatedly'] = $this->loadSingletonsRepeatedly();
-        $resultArray['singletonIncrementally'] = $this->loadSingletonsIncrementally();
-        $resultArray['nonSingletonRepeatedly'] = $this->loadNonSingletonsRepeatedly();
+        $resultArray['singletonRepeatedly']       = $this->loadSingletonsRepeatedly();
+        $resultArray['singletonIncrementally']    = $this->loadSingletonsIncrementally();
+        $resultArray['nonSingletonRepeatedly']    = $this->loadNonSingletonsRepeatedly();
         $resultArray['nonSingletonIncrementally'] = $this->loadNonSingletonsIncrementally();
         $resultArray['AtoZ']                      = $this->loadAtoZClasses();
 
@@ -182,6 +182,8 @@ class ContainerTest implements Basetest
         $this->container->add('minimumSingleton', 'TestClasses\MinimumSingleton');
 
         $this->container->add('smallSingleton', 'TestClasses\SmallSingleton');
+
+        $this->container->add('largeSingleton', 'TestClasses\LargeSingleton');
     }
 
     /**
@@ -192,6 +194,8 @@ class ContainerTest implements Basetest
         $this->container->add('minimumNonSingleton', '\TestClasses\MinimumNonSingleton');
 
         $this->container->add('smallNonSingleton', '\TestClasses\smallNonSingleton');
+
+        $this->container->add('largeNonSingleton', 'TestClasses\LargeNonSingleton');
     }
 
     public function AtoZContainer(){
@@ -278,7 +282,8 @@ class ContainerTest implements Basetest
         $singletons =
             [
                 'minimumSingleton',
-                'smallSingleton'
+                'smallSingleton',
+                'largeSingleton'
             ];
 
         return $singletons;
@@ -288,7 +293,8 @@ class ContainerTest implements Basetest
         $singletons =
             [
                 'minimumNonSingleton',
-                'smallNonSingleton'
+                'smallNonSingleton',
+                'largeNonSingleton'
             ];
 
         return $singletons;

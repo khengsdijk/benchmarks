@@ -22,8 +22,6 @@ interface Basetest
 
     public function loadNonSingletonsIncrementally();
 
-    public function loadAllClassesIncrementally();
-
     public function loadAtoZClasses();
 
     public function executeTests();

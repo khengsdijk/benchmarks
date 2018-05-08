@@ -23,7 +23,8 @@ class ClassNameProvider
         $singletons =
             [
                 'minimumsingleton',
-                'smallsingleton'
+                'smallsingleton',
+                'largesingleton'
             ];
 
         return $singletons;
@@ -38,7 +39,8 @@ class ClassNameProvider
         $singletons =
             [
                 'minimumnonsingleton',
-                'smallnonsingleton'
+                'smallnonsingleton',
+                'largenonsingleton'
             ];
 
         return $singletons;

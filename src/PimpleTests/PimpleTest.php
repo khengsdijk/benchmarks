@@ -162,7 +162,6 @@ class PimpleTest implements Basetest
 
         }
         $endTime = microtime(true);
-        echo "pimple is a shitty container and cannot load all A to Z classes";
         array_push($results, $this->util->averageTime($startTime, $endTime, $this->testRounds, 'AtoZ'));
 
         return $results;
@@ -196,6 +195,10 @@ class PimpleTest implements Basetest
             return new TestClasses\SmallSingleton();
         });
 
+        $this->container['largesingleton'] = $this->container->factory(function ($container) {
+            return new TestClasses\LargeSingleton();
+        });
+
     }
 
     /**
@@ -209,6 +212,10 @@ class PimpleTest implements Basetest
 
         $this->container['smallnonsingleton'] = $this->container->factory(function ($container) {
             return new TestClasses\SmallNonSingleton('foo');
+        });
+
+        $this->container['largenonsingleton'] = $this->container->factory(function ($container) {
+            return new TestClasses\LargeSingleton();
         });
 
     }

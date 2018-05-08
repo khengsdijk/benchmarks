@@ -1,21 +1,12 @@
 {
 	"Lunr": {
-        "url": "m2:/mmw/lunr.git",
-        "version": "0.4",
+        "url": "https://github.com/M2Mobi/lunr.git",
+        "version": "0.5",
         "revision": "master",
         "psr4": {
             "prefix": "Lunr",
             "search-path": "/src/Lunr/"
         }
-    },
-    "Stellr": {
-      "url": "m2:/mmw/stellr.git",
-      "version": "1.6",
-      "revision": "master",
-      "psr4": {
-        "prefix": "Stellr",
-        "search-path": "/src/Stellr/"
-      }
     },
     "Pimple": {
         "url": "https://github.com/silexphp/Pimple.git",

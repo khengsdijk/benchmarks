@@ -22,7 +22,8 @@ class LunrLocatorNames
         $singletons =
             [
                 'minimumsingleton',
-                'smallsingleton'
+                'smallsingleton',
+                'largesingleton'
             ];
 
         return $singletons;
@@ -37,7 +38,8 @@ class LunrLocatorNames
         $singletons =
             [
                 'minimumnonsingleton',
-                'smallnonsingleton'
+                'smallnonsingleton',
+                'largenonsingleton'
             ];
 
         return $singletons;

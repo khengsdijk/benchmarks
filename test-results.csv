@@ -1,0 +1,70 @@
+lunr
+  test name , time in milliseconds 
+TestClasses\MinimumSingleton , 0.0031349658966064
+TestClasses\SmallSingleton , 0.0033869743347168
+TestClasses\LargeSingleton , 0.0031478404998779
+Incremental loading of singletons , 0.0092728137969971
+TestClasses\MinimumNonSingleton , 0.0089092254638672
+TestClasses\SmallNonSingleton , 0.022342920303345
+TestClasses\LargeNonSingleton , 0.033876180648804
+Incremental loading of non singletons , 0.06535005569458
+AtoZ , 0.0077250003814697
+
+ 
+ 
+pimple
+  test name , time in milliseconds 
+TestClasses\MinimumSingleton , 0.0052969455718994
+TestClasses\SmallSingleton , 0.0046069622039795
+TestClasses\LargeSingleton , 0.004533052444458
+Incremental loading of singletons , 0.01461386680603
+TestClasses\MinimumNonSingleton , 0.0050830841064453
+TestClasses\SmallNonSingleton , 0.0048530101776123
+TestClasses\LargeSingleton , 0.0044970512390137
+Incremental loading of non singletons , 0.014503955841064
+AtoZ , 0.09226393699646
+
+ 
+ 
+php-DI
+  test name , time in milliseconds 
+TestClasses\MinimumSingleton , 0.0027980804443359
+TestClasses\SmallSingleton , 0.0015308856964111
+TestClasses\LargeSingleton , 0.001298189163208
+Incremental loading of singletons , 0.0033609867095947
+TestClasses\MinimumNonSingleton , 0.0012040138244629
+TestClasses\SmallNonSingleton , 0.0010209083557129
+TestClasses\LargeNonSingleton , 0.0011918544769287
+Incremental loading of non singletons , 0.0030450820922852
+AtoZ , 0.0036768913269043
+
+ 
+ 
+aura-DI
+  test name , time in milliseconds 
+TestClasses\MinimumSingleton , 0.0086770057678223
+TestClasses\SmallSingleton , 0.0089311599731445
+TestClasses\LargeSingleton , 0.0078361034393311
+Incremental loading of singletons , 0.023726940155029
+TestClasses\MinimumNonSingleton , 0.0083978176116943
+TestClasses\SmallNonSingleton , 0.0086479187011719
+TestClasses\LargeNonSingleton , 0.0089421272277832
+Incremental loading of non singletons , 0.024638891220093
+AtoZ , 0.23402094841003
+
+ 
+ 
+container
+  test name , time in milliseconds 
+minimumSingleton , 0.008558988571167
+smallSingleton , 0.0086460113525391
+largeSingleton , 0.0083029270172119
+Incremental loading of singletons , 0.025208950042725
+minimumNonSingleton , 0.0089318752288818
+smallNonSingleton , 0.0089619159698486
+largeNonSingleton , 0.00913405418396
+Incremental loading of non singletons , 0.027714014053345
+AtoZ , 0.31183695793152
+
+ 
+ 

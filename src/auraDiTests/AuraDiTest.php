@@ -172,7 +172,8 @@ class AuraDiTest implements Basetest
         $singletons =
             [
                 'TestClasses\MinimumSingleton',
-                'TestClasses\SmallSingleton'
+                'TestClasses\SmallSingleton',
+                'TestClasses\LargeSingleton'
             ];
 
         return $singletons;
@@ -182,7 +183,8 @@ class AuraDiTest implements Basetest
         $singletons =
             [
                 'TestClasses\MinimumNonSingleton',
-                'TestClasses\SmallNonSingleton'
+                'TestClasses\SmallNonSingleton',
+                'TestClasses\LargeNonSingleton'
             ];
 
         return $singletons;
